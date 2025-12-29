@@ -11,18 +11,11 @@ public class Gun : ClickableItem
         currentDamage = baseDamage;
     }
 
-    public void IncreaseDamageMultiplier(int multiplier)
+    public override void OnClicked(ShooterType type)
     {
-        currentDamage *= multiplier;
-        Debug.Log("Silah hasarý arttý! Yeni damage: " + currentDamage);
-    }
-
-    public void ResetDamage()
-    {
-        currentDamage = baseDamage;
-    }
-    public override void OnClicked()
-    {
+        GunController gun = this.GetComponent<GunController>();
+        gun.Fire(type, out currentDamage);
+         player.TakeDamage(currentDamage);
         Debug.Log("Damage Verildi  "+currentDamage);
     }
 

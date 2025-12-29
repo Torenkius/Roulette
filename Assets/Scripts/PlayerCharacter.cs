@@ -43,7 +43,7 @@ public class PlayerCharacter : MonoBehaviour
 
             if (item != null)
             {
-                item.OnClicked(); 
+                item.OnClicked(ShooterType.Player); 
             }
         }
     }

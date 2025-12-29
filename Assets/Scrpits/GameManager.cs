@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     private TurnOwner currentTurn;
     private bool isRoundOver = false;
     private bool isProcessingTurn = false;
+    private bool isRoundFreeze=false;
 
     private void Start()
     {
@@ -134,8 +135,8 @@ public class GameManager : MonoBehaviour
             uiManager.LogMessage(actionLog + " -> BANG! (Damage)");
             target.TakeDamage(1);
 
-            // Eğer kendimize sıktıysak bile dolu mermide sıra geçer.
-            SwitchTurn();
+            if(!isRoundFreeze) 
+              SwitchTurn();
         }
         else
         {
@@ -154,7 +155,8 @@ public class GameManager : MonoBehaviour
             else
             {
                 // Rakibe boş sıktın -> Sıra geçer
-                SwitchTurn();
+                if (!isRoundFreeze)
+                    SwitchTurn();
             }
         }
 

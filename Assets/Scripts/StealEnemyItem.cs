@@ -5,7 +5,7 @@ public class StealEnemyItem : ClickableItem
     [Header("Referanslar")]
     public Transform enemyItemArea;
     public Transform playerItemArea;  
-    public override void OnClicked()
+    public override void OnClicked(ShooterType t)
     {
         if (enemyItemArea == null)
         {

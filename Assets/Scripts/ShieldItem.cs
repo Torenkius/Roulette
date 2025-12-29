@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ShieldItem : ClickableItem
 {
-    public override void OnClicked()
+    public override void OnClicked(ShooterType t)
     {
         Debug.Log(itemName + " týklandý! Shield AKTÝF.");
 

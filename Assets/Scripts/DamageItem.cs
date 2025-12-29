@@ -5,18 +5,18 @@ public class DamageItem : ClickableItem
 {
     public int damageAmountX = 2;
 
-    public override void OnClicked( )
+    public override void OnClicked(ShooterType t)
     {
         Debug.Log(itemName + " týklandý! Hasar veriyor: " + damageAmountX);
          GameObject gunObject = GameObject.FindGameObjectWithTag("Gun");
 
         if (gunObject != null)
         {
-            Gun gun = gunObject.GetComponent<Gun>();
+            GunController gun = gunObject.GetComponent<GunController>();
 
             if (gun != null)
             {
-                gun.IncreaseDamageMultiplier(damageAmountX);
+                gun.damageMultiplierActive=true;
             }
             else
             {

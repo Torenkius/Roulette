@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyTurnBlockItem : ClickableItem
 {
-    public override void OnClicked()
+    public override void OnClicked(ShooterType t)
     {
         // Turn sistemini yöneten bir manager'ýmýz olduðunu varsayýyorum
         if (TurnManager.Instance != null)
