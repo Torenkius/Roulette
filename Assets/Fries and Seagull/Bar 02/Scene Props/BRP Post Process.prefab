@@ -10,7 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7120583508055018601}
   - component: {fileID: 6274393096715588937}
+<<<<<<< HEAD
   - component: {fileID: -3140432385143978424}
+=======
+  - component: {fileID: 1763400046507866640}
+>>>>>>> 36afecb49f8917973405a9bd7aa7cfdc0c44a0d8
   m_Layer: 31
   m_Name: BRP Post Process
   m_TagString: Untagged
@@ -45,7 +49,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14c13565c4a1f064abef939221176e47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
 --- !u!114 &-3140432385143978424
+=======
+--- !u!114 &1763400046507866640
+>>>>>>> 36afecb49f8917973405a9bd7aa7cfdc0c44a0d8
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -61,4 +69,8 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
+<<<<<<< HEAD
   sharedProfile: {fileID: 11400000, guid: 61f1d4305d416274a902e2cb076b8188, type: 2}
+=======
+  sharedProfile: {fileID: 11400000, guid: 4bb0c39772e0b6140b6569f57fe1746d, type: 2}
+>>>>>>> 36afecb49f8917973405a9bd7aa7cfdc0c44a0d8
