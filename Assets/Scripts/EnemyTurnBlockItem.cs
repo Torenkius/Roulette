@@ -5,15 +5,8 @@ public class EnemyTurnBlockItem : ClickableItem
     public override void OnClicked(ShooterType t)
     {
         // Turn sistemini yöneten bir manager'ýmýz olduðunu varsayýyorum
-        if (TurnManager.Instance != null)
-        {
-            TurnManager.Instance.blockNextEnemyTurn = true;
-            Debug.Log(itemName + " kullanýldý! Bir sonraki enemy turn bloklandý.");
-        }
-        else
-        {
-            Debug.LogWarning("TurnManager.Instance bulunamadý!");
-        }
+        GameManager gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+        gameManager.isRoundFreeze = true;
 
         // Item kullanýldýktan sonra masadan kalksýn
         Destroy(gameObject);

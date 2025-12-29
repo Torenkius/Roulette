@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     private TurnOwner currentTurn;
     private bool isRoundOver = false;
     private bool isProcessingTurn = false;
-    private bool isRoundFreeze=false;
+    public bool isRoundFreeze=false;
 
     private void Start()
     {
