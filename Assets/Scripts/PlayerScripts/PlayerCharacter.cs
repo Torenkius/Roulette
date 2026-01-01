@@ -17,6 +17,8 @@ public class PlayerCharacter : MonoBehaviour
     public bool canInteract = true;
     [Header("Animation&Sound")]
     public Animator animator;
+    public Transform healholder;
+    public Transform itemholder;
 
 
     private Camera cam;

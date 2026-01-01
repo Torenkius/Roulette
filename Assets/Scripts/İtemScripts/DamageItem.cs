@@ -10,11 +10,12 @@ public class DamageItem : ClickableItem
         Debug.Log(itemName + " týklandý! Hasar veriyor: " + damageAmountX);
          GameObject gunObject = GameObject.FindGameObjectWithTag("Gun");
         if(t==ShooterType.Player ){
+            this.gameObject.transform.parent = player.itemholder;
+            this.gameObject.transform.localPosition = Vector3.zero;
             player.animator.SetTrigger("isTake");
         }
         else if (t == ShooterType.Enemy)
         {
-            enemy.animator.SetTrigger("isWait");
             enemy.animator.SetTrigger("isTake");
         }
 
@@ -35,6 +36,11 @@ public class DamageItem : ClickableItem
         {
             Debug.LogWarning("Gun tag'li obje bulunamadý!");
         }
-        Destroy(gameObject);
+        Destroy(gameObject,2f);
     }
+   
+    
+       
+    
+
 }

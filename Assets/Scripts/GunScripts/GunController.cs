@@ -5,13 +5,17 @@ using System.Linq;
 
 public class GunController : MonoBehaviour
 {
+    public GunReturnToTable gunReturnToTable;
     public GameManager gameManager;
     private Queue<ShellType> magazine = new Queue<ShellType>();
     [Header("Player &6 Enemy References")]
     private PlayerCharacter player;
     private AIController enemy;
     [Header("Gun Settings")]
-    public Transform firePoint;   // Ateþ efekti veya mermi çýkýþ noktasý
+    public Transform firePoint;
+    public Transform GunT;
+    public Transform playerGunHolder;
+    public Transform enemyGunHolder;// Ateþ efekti veya mermi çýkýþ noktasý
 
     [Header("Damage Settings")]
     public int baseDamage = 1;            // Normal hasar
@@ -82,22 +86,36 @@ public class GunController : MonoBehaviour
         }
         if (shooter == ShooterType.Player&&isSelf)
         {
+            GunT.transform.parent = playerGunHolder;
+            GunT.transform.localPosition = Vector3.zero;
+            player.animator.SetTrigger("isGun");
             player.TakeDamage(damage);
         }
         else if (shooter == ShooterType.Enemy && isSelf)   
         {
+            GunT.transform.parent = enemyGunHolder;
+            GunT.transform.localPosition = Vector3.zero;
+            enemy.animator.SetTrigger("isGun");
+
             enemy.TakeDamage(damage);
         }
         else if (shooter == ShooterType.Player && !isSelf)
         {
+            GunT.transform.parent = playerGunHolder;
+            GunT.transform.localPosition = Vector3.zero;
+            player.animator.SetTrigger("isGun");
+
             enemy.TakeDamage(damage);
         }
         else if (shooter == ShooterType.Enemy && !isSelf)
         {
+            GunT.transform.parent = enemyGunHolder;
+            GunT.transform.localPosition = Vector3.zero;
+            enemy.animator.SetTrigger("isGun");
             player.TakeDamage(damage);
         }
-        
-
+        gunReturnToTable.StartReturnTimer();
+    
         Debug.Log($"Fired: {currentShell} | Shooter: {shooter} | Damage: {damage}");
 
         // Burada animasyon veya ses tetiklenebilir

@@ -7,6 +7,17 @@ public class StealEnemyItem : ClickableItem
     public Transform playerItemArea;  
     public override void OnClicked(ShooterType t)
     {
+        if (t == ShooterType.Player)
+        {
+            this.gameObject.transform.parent = player.itemholder;
+            this.gameObject.transform.localPosition = Vector3.zero;
+            player.animator.SetTrigger("isTake");
+        }
+        else if (t == ShooterType.Enemy)
+        {
+            enemy.animator.SetTrigger("isTake");
+        }
+
         if (enemyItemArea == null)
         {
             Debug.LogWarning("StealEnemyItem: enemyItemArea atanmadý!");
@@ -23,9 +34,10 @@ public class StealEnemyItem : ClickableItem
         Debug.Log("Düþmandan çalýnan item: " + stolenItem.itemName);
         if (playerItemArea != null)
         {
-            stolenItem.transform.SetParent(playerItemArea);
-            stolenItem.transform.localPosition = Vector3.zero;
+            stolenItem.transform.parent = playerItemArea;
+            stolenItem.transform.position= this.gameObject.transform.position;
+            stolenItem.gameObject.layer = LayerMask.NameToLayer("Item");
         }
-        Destroy(gameObject);
+        Destroy(gameObject,2f);
     }
 }

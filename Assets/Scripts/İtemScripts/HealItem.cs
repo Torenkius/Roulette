@@ -9,12 +9,18 @@ public class HealItem : ClickableItem
         Debug.Log(itemName + " týklandý! Can veriyor: " + healAmount);
         if (t == ShooterType.Player)
         {
+            this.gameObject.transform.parent = player.healholder;
+            this.gameObject.transform.localPosition = Vector3.zero;
+            player.animator.SetTrigger("isDrink");
             player.Heal(healAmount);
         }
         else
         {
-           enemy.Heal(healAmount);
+           
+            enemy.animator.SetTrigger("isDrink");
+            enemy.Heal(healAmount);
         }
-            Destroy(gameObject);
+        Destroy(gameObject,5f); 
+
     }
 }

@@ -20,7 +20,10 @@ public class AIController : MonoBehaviour
     public PlayerCharacter player;           // Ýnsan oyuncu
     public GunController gun;               // Ortak silah
     public List<ClickableItem> myItems;
-    public Animator animator;// AI'nin kullanabileceði itemler
+    public Animator animator;
+    public Transform HealHolder;
+    public Transform itemHolder;
+    // AI'nin kullanabileceði itemler
 
     [Header("AI Settings")]
     public float thinkDelay = 0.75f;        // Tur baþladýðýnda biraz beklesin
@@ -29,7 +32,9 @@ public class AIController : MonoBehaviour
 
     private void Awake()
     {
+        
         animator = GetComponent<Animator>();
+        animator.SetTrigger("isWait");
         currentHealth = maxHealth;
 
         if (gun == null)
@@ -75,6 +80,18 @@ public class AIController : MonoBehaviour
         // Þimdilik: rastgele bir item seçip kullansýn
         int index = Random.Range(0, myItems.Count);
         var item = myItems[index];
+        if(item.name=="HealItem")
+        {
+            item.transform.parent = HealHolder;
+            item.transform.localPosition = Vector3.zero;
+
+        }
+        else
+        {
+            item.transform.parent = itemHolder;
+            item.transform.localPosition = Vector3.zero;
+        }
+        
 
         if (item == null)
             return;

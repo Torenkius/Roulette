@@ -9,14 +9,19 @@ public class ShieldItem : ClickableItem
         // Zaten açýksa tekrar açmaya gerek yok ama istersen üst üste bindirebilirsin
         if (t == ShooterType.Enemy)
         {
+            enemy.animator.SetTrigger("isTake");
             enemy.shieldActive = true;
         }
         if (t==ShooterType.Player)
         {
+            this.gameObject.transform.parent = player.itemholder;
+            this.gameObject.transform.localPosition = Vector3.zero;
+            player.animator.SetTrigger("isTake");
             player.shieldActive = true;
         }
 
+
         // Bu item kullanýldý, masadan kalksýn
-        Destroy(gameObject);
+        Destroy(gameObject,2f);
     }
 }
