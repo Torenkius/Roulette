@@ -12,12 +12,20 @@ public class HealItem : ClickableItem
             this.gameObject.transform.parent = player.healholder;
             this.gameObject.transform.localPosition = Vector3.zero;
             player.animator.SetTrigger("isDrink");
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.Play_healing_sound();
+            }
             player.Heal(healAmount);
         }
         else
         {
            
             enemy.animator.SetTrigger("isDrink");
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.Play_healing_sound();
+            }
             enemy.Heal(healAmount);
         }
         Destroy(gameObject,5f); 

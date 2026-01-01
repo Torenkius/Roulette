@@ -49,6 +49,10 @@ public class GunController : MonoBehaviour
         }
 
         Debug.Log($"Magazine Loaded: {liveCount} Live, {blankCount} Blank");
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.Play_reload_sound();
+        }
     }
 
     /// <summary>
@@ -119,7 +123,21 @@ public class GunController : MonoBehaviour
         Debug.Log($"Fired: {currentShell} | Shooter: {shooter} | Damage: {damage}");
 
         // Burada animasyon veya ses tetiklenebilir
-        return damage;
+        if(damage == 0)
+        {
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.Play_full_gun_sound();
+            }
+        }
+        else
+        {
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.Play_empty_gun_sound();
+            }
+        }
+            return damage;
     }
 
     public int GetRemainingShells()

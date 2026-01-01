@@ -11,6 +11,10 @@ public class ShieldItem : ClickableItem
         {
             enemy.animator.SetTrigger("isTake");
             enemy.shieldActive = true;
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.Play_shield_sound();
+            }
         }
         if (t==ShooterType.Player)
         {
@@ -18,6 +22,10 @@ public class ShieldItem : ClickableItem
             this.gameObject.transform.localPosition = Vector3.zero;
             player.animator.SetTrigger("isTake");
             player.shieldActive = true;
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.Play_shield_sound();
+            }
         }
 
 

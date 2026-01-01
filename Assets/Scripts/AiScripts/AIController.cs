@@ -137,6 +137,10 @@ public class AIController : MonoBehaviour
         currentHealth += amount;
         currentHealth = Mathf.Min(currentHealth, maxHealth);
         Debug.Log("AI iyileþti. Can: " + currentHealth);
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.Play_healing_sound();
+        }
     }
 
     public void TakeDamage(int amount)
@@ -167,5 +171,9 @@ public class AIController : MonoBehaviour
         isDead = true;
         Debug.Log("AI öldü!");
         // Buraya animasyon / disable vs. koyabilirsin
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.Play_die_sound();
+        }
     }
 }

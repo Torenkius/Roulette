@@ -68,6 +68,10 @@ public class PlayerCharacter : MonoBehaviour
         {
             Debug.Log("Shield gelen hasarý engelledi!");
             shieldActive = false;
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.Play_shield_sound();
+            }
             return;
         }
         currentHealth -= amount;
@@ -85,10 +89,18 @@ public class PlayerCharacter : MonoBehaviour
         currentHealth += amount;
         currentHealth = Mathf.Min(currentHealth, maxHealth);
         Debug.Log("Player iyileþti. Can: " + currentHealth);
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.Play_healing_sound();
+        }
     }
     void Die()
     {
         Debug.Log("Player öldü!");
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.Play_die_sound();
+        }
     }
     public void setUp()
     {

@@ -13,10 +13,18 @@ public class DamageItem : ClickableItem
             this.gameObject.transform.parent = player.itemholder;
             this.gameObject.transform.localPosition = Vector3.zero;
             player.animator.SetTrigger("isTake");
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.Play_gun_powder_sound();
+            }
         }
         else if (t == ShooterType.Enemy)
         {
             enemy.animator.SetTrigger("isTake");
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.Play_gun_powder_sound();
+            }
         }
 
         if (gunObject != null)
