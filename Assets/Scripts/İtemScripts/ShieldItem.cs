@@ -7,7 +7,11 @@ public class ShieldItem : ClickableItem
         Debug.Log(itemName + " týklandý! Shield AKTÝF.");
 
         // Zaten açýksa tekrar açmaya gerek yok ama istersen üst üste bindirebilirsin
-        if (!player.shieldActive)
+        if (t == ShooterType.Enemy)
+        {
+            enemy.shieldActive = true;
+        }
+        if (t==ShooterType.Player)
         {
             player.shieldActive = true;
         }

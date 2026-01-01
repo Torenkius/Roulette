@@ -5,24 +5,28 @@ using System.Linq;
 
 public class GunController : MonoBehaviour
 {
+    public GameManager gameManager;
     private Queue<ShellType> magazine = new Queue<ShellType>();
     [Header("Player &6 Enemy References")]
     private PlayerCharacter player;
+    private AIController enemy;
     [Header("Gun Settings")]
-    public Transform firePoint;   // AteÅŸ efekti veya mermi Ã§Ä±kÄ±ÅŸ noktasÄ±
+    public Transform firePoint;   // Ateş efekti veya mermi çıkış noktası
 
     [Header("Damage Settings")]
     public int baseDamage = 1;            // Normal hasar
-    public bool damageMultiplierActive;   // Zehirli mermi vs. aÃ§arsa true
+    public bool damageMultiplierActive;   // Zehirli mermi vs. açarsa true
 
-    // Son kimin ateÅŸ ettiÄŸi bilgisini tutmak istersen:
+    // Son kimin ateş ettiği bilgisini tutmak istersen:
     public ShooterType lastShooter { get; private set; }
     private void Awake()
     {
-        player=GameObject.FindWithTag("Player").GetComponent<PlayerCharacter>();
+        player = GameObject.FindWithTag("Player").GetComponent<PlayerCharacter>();
+        enemy= GameObject.FindWithTag("Enemy").GetComponent<AIController>();
+        LoadMagazine(5,0);
     }
 
-    // ÅarjÃ¶rÃ¼ doldurur ve karÄ±ÅŸtÄ±rÄ±r
+    // Şarjörü doldurur ve karıştırır
     public void LoadMagazine(int liveCount, int blankCount)
     {
         magazine.Clear();
@@ -31,7 +35,7 @@ public class GunController : MonoBehaviour
         for (int i = 0; i < liveCount; i++) shells.Add(ShellType.Live);
         for (int i = 0; i < blankCount; i++) shells.Add(ShellType.Blank);
 
-        // Shuffle (KarÄ±ÅŸtÄ±rma)
+        // Shuffle (Karıştırma)
         System.Random rng = new System.Random();
         shells = shells.OrderBy(a => rng.Next()).ToList();
 
@@ -44,51 +48,60 @@ public class GunController : MonoBehaviour
     }
 
     /// <summary>
-    /// AteÅŸ etme fonksiyonu.
-    /// - Hangi mermi tÃ¼rÃ¼ sÄ±kÄ±ldÄ±ÄŸÄ±nÄ± dÃ¶ner.
-    /// - out parametresi ile bu ÅŸutun vereceÄŸi hasarÄ± dÃ¶ndÃ¼rÃ¼r.
-    /// - shooter ile Player mÄ± Enemy mi sÄ±ktÄ± bilinir.
+    /// Ateş etme fonksiyonu.
+    /// - Hangi mermi türü sıkıldığını döner.
+    /// - out parametresi ile bu şutun vereceği hasarı döndürür.
+    /// - shooter ile Player mı Enemy mi sıktı bilinir.
     /// </summary>
-    public ShellType Fire(ShooterType shooter, out int damage)
+    public int Fire(ShooterType shooter, bool isSelf)
     {
-        damage = 0;
+        int damage = 0;
 
         if (magazine.Count == 0)
         {
             Debug.LogError("Magazine is empty!");
-            return ShellType.Blank; // Hata durumunda boÅŸ kabul edelim
+            return 0; // Hata durumunda boş kabul edelim
         }
 
         lastShooter = shooter;
 
         ShellType currentShell = magazine.Dequeue();
 
-        // Sadece canlÄ± mermi hasar versin
+        // Sadece canlı mermi hasar versin
         if (currentShell == ShellType.Live)
         {
             damage = baseDamage;
 
-            // Damage multiplier aktifse hasarÄ± 2 katÄ±na Ã§Ä±kar
+            // Damage multiplier aktifse hasarı 2 katına çıkar
             if (damageMultiplierActive)
             {
                 damage *= 2;
-                // EÄŸer sadece bir sonraki atÄ±ÅŸa etki etsin istiyorsan:
+                // Eğer sadece bir sonraki atışa etki etsin istiyorsan:
                 damageMultiplierActive = false;
             }
         }
-        if(shooter == ShooterType.Player)
-        {
-            //Enemy objesi alÄ±nÄ±cak ai geldikten sonra takedamage fonksiyonu Ã§aÄŸÄ±rÄ±lacak
-        }
-        else
+        if (shooter == ShooterType.Player&&isSelf)
         {
             player.TakeDamage(damage);
         }
+        else if (shooter == ShooterType.Enemy && isSelf)   
+        {
+            enemy.TakeDamage(damage);
+        }
+        else if (shooter == ShooterType.Player && !isSelf)
+        {
+            enemy.TakeDamage(damage);
+        }
+        else if (shooter == ShooterType.Enemy && !isSelf)
+        {
+            player.TakeDamage(damage);
+        }
+        
 
         Debug.Log($"Fired: {currentShell} | Shooter: {shooter} | Damage: {damage}");
 
         // Burada animasyon veya ses tetiklenebilir
-        return currentShell;
+        return damage;
     }
 
     public int GetRemainingShells()

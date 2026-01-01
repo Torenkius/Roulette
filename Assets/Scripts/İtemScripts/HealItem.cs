@@ -13,7 +13,7 @@ public class HealItem : ClickableItem
         }
         else
         {
-           // enemy.Heal(healAmount);
+           enemy.Heal(healAmount);
         }
             Destroy(gameObject);
     }

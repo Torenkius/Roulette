@@ -9,6 +9,14 @@ public class DamageItem : ClickableItem
     {
         Debug.Log(itemName + " týklandý! Hasar veriyor: " + damageAmountX);
          GameObject gunObject = GameObject.FindGameObjectWithTag("Gun");
+        if(t==ShooterType.Player ){
+            player.animator.SetTrigger("isTake");
+        }
+        else if (t == ShooterType.Enemy)
+        {
+            enemy.animator.SetTrigger("isWait");
+            enemy.animator.SetTrigger("isTake");
+        }
 
         if (gunObject != null)
         {
