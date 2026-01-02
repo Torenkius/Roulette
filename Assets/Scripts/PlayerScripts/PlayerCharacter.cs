@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerCharacter : MonoBehaviour
 {
+    public AIController enemyAI;
     [Header("Health")]
     public int maxHealth = 3;
     public int currentHealth;
@@ -30,6 +31,7 @@ public class PlayerCharacter : MonoBehaviour
 
     void Awake()
     {
+
         InitializeHealthUI();
         animator = GetComponent<Animator>();
         interactableLayer =LayerMask.GetMask("Item");
@@ -86,6 +88,7 @@ public class PlayerCharacter : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            isDead = true;
             Die();
         }
         UpdateHealthUI();
@@ -104,6 +107,9 @@ public class PlayerCharacter : MonoBehaviour
     }
     void Die()
     {
+       enemyAI.animator.SetTrigger("isWin");
+       animator.SetTrigger("isDead");
+
         Debug.Log("Player öldü!");
         if (AudioManager.instance != null)
         {

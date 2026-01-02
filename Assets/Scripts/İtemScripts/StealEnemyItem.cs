@@ -4,7 +4,8 @@ public class StealEnemyItem : ClickableItem
 {
     [Header("Referanslar")]
     public Transform enemyItemArea;
-    public Transform playerItemArea;  
+    public Transform playerItemArea;
+    public Transform stolenitemArea;
     public override void OnClicked(ShooterType t)
     {
         if (t == ShooterType.Player)
@@ -43,7 +44,7 @@ public class StealEnemyItem : ClickableItem
         if (playerItemArea != null)
         {
             stolenItem.transform.parent = playerItemArea;
-            stolenItem.transform.position= this.gameObject.transform.position;
+            stolenItem.transform.position= stolenitemArea.position;
             stolenItem.gameObject.layer = LayerMask.NameToLayer("Item");
         }
         Destroy(gameObject,2f);
