@@ -23,6 +23,9 @@ public class GunController : MonoBehaviour
 
     // Son kimin ateþ ettiði bilgisini tutmak istersen:
     public ShooterType lastShooter { get; private set; }
+
+    public ShellType LastFiredShell { get; private set; } //sonradan eklendi
+
     private void Awake()
     {
         player = GameObject.FindWithTag("Player").GetComponent<PlayerCharacter>();
@@ -74,6 +77,8 @@ public class GunController : MonoBehaviour
         lastShooter = shooter;
 
         ShellType currentShell = magazine.Dequeue();
+        LastFiredShell = currentShell; //sonradan eklendi
+
 
         // Sadece canlý mermi hasar versin
         if (currentShell == ShellType.Live)
@@ -118,8 +123,28 @@ public class GunController : MonoBehaviour
             enemy.animator.SetTrigger("isGun");
             player.TakeDamage(damage);
         }
-        gunReturnToTable.StartReturnTimer();
-    
+        else if (shooter == ShooterType.Enemy && isSelf)
+        {
+            // AI kendine sýkýyor: silah AI tarafýnda kalsýn, AI animasyonu oynasýn
+            GunT.transform.parent = enemyGunHolder;
+            GunT.transform.localPosition = Vector3.zero;
+
+            if (enemy != null && enemy.animator != null)
+                enemy.animator.SetTrigger("isGun");
+
+            // Hasarý AI kendisi alýr
+            if (enemy != null)
+                enemy.TakeDamage(damage);
+
+            Debug.Log("AI kendine ateþ etti. Damage: " + damage);
+        }
+        //sonradan eklendi ->
+        if (gunReturnToTable != null)
+            gunReturnToTable.StartReturnTimer();
+        else
+            Debug.LogWarning("gunReturnToTable NULL! GunController Inspector'dan ata.");
+        //buraya kadar <-
+
         Debug.Log($"Fired: {currentShell} | Shooter: {shooter} | Damage: {damage}");
 
         // Burada animasyon veya ses tetiklenebilir

@@ -423,6 +423,9 @@ MonoBehaviour:
   animator: {fileID: 0}
   HealHolder: {fileID: 1224431830}
   itemHolder: {fileID: 1410075148}
+  useSmartItemPriority: 1
+  healWhenHpAtOrBelow: 2
+  useFreezeWhenHpAtOrBelow: 2
   thinkDelay: 0.75
   selfShotChance: 0.2
   healthIconPrefab: {fileID: 7288149469717029727, guid: 519a39dfd3186ba4cb2bb03d09799d6f, type: 3}
@@ -1980,6 +1983,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1170492246820452668, guid: 97fd5e3acb22daf4ebc2e07935a935e9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 345739837}
+    - targetCorrespondingSourceObject: {fileID: 1170492246820452668, guid: 97fd5e3acb22daf4ebc2e07935a935e9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 345739842}
   m_SourcePrefab: {fileID: 100100000, guid: 97fd5e3acb22daf4ebc2e07935a935e9, type: 3}
 --- !u!1 &345739834 stripped
 GameObject:
@@ -2003,7 +2009,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65a3f23f6eda8a145ae29d8bb688b9c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GunController
-  gunReturnToTable: {fileID: 0}
+  gunReturnToTable: {fileID: 345739842}
   gameManager: {fileID: 712829014}
   firePoint: {fileID: 1235823246}
   GunT: {fileID: 345739838}
@@ -2032,6 +2038,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5638708452549226843, guid: 97fd5e3acb22daf4ebc2e07935a935e9, type: 3}
   m_PrefabInstance: {fileID: 345739833}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &345739842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345739834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d97175b701f7af40b2ebbc6b620e7db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GunReturnToTable
+  returnDelay: 4
 --- !u!1 &377112626
 GameObject:
   m_ObjectHideFlags: 0
