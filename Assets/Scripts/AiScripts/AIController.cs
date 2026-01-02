@@ -39,7 +39,10 @@ public class AIController : MonoBehaviour
     [Header("Health UI")]
     public GameObject healthIconPrefab;    // Can ikonu prefab
     public Transform healthContainer;      // ?konlar?n parent objesi
-    private List<GameObject> activeIcons = new List<GameObject>(); // ?kon listesi
+    private List<GameObject> activeIcons = new List<GameObject>();
+    public float deathDelay = 5f;
+    private bool isDying = false;
+
 
     private void Awake()
     {
@@ -265,18 +268,6 @@ public class AIController : MonoBehaviour
             activeIcons[i].SetActive(i < currentHealth);
         }
     }
-
-    private ClickableItem FindFirstItem<T>() where T : ClickableItem
-    {
-        // myItems listesinde aranan tipe (T) ait ilk item'i bulur ve d?nd?r?r
-        // Bulamazsa null d?ner
-        for (int i = 0; i < myItems.Count; i++)
-        {
-            if (myItems[i] is T) return myItems[i];
-        }
-        return null;
-    }
-
     private void UseItem(ClickableItem item)
     {
         // E?er item yoksa (null) hi?bir ?ey yapmadan ??k
@@ -316,17 +307,34 @@ public class AIController : MonoBehaviour
         currentHealth -= amount;
 
         // Can 0'?n alt?na inmesin diye s?n?rla
-        currentHealth = Mathf.Max(currentHealth, 0);
+        currentHealth = Mathf.Max(currentHealth,0);
 
         // Konsola bilgi yazd?r (debug / olay takibi)
         Debug.Log("AI damage ald?. Can: " + currentHealth);
 
         // Can 0 veya daha az olduysa ?lme fonksiyonunu ?a??r
         if (currentHealth <= 0)
-            Die();
+        {
+            gameManager.IsGameOver = true;
+            StartCoroutine(DieCooldown());
+
+        }
+           
+
 
         // UI'daki can ikonlar?n? g?ncelle
         UpdateHealthUI();
+    }
+    private IEnumerator DieCooldown()
+    {
+        isDying = true;
+
+        // burada death animasyonu, ses vs. oynatabilirsin
+        Debug.Log("Ölecek, " + deathDelay + " saniye sonra Die çaðrýlacak.");
+
+        yield return new WaitForSeconds(deathDelay);
+
+        Die();           // asýl ölüm fonksiyonun
     }
 
 }

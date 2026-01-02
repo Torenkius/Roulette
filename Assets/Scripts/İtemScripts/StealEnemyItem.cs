@@ -8,25 +8,6 @@ public class StealEnemyItem : ClickableItem
     public Transform stolenitemArea;
     public override void OnClicked(ShooterType t)
     {
-        if (t == ShooterType.Player)
-        {
-            this.gameObject.transform.parent = player.itemholder;
-            this.gameObject.transform.localPosition = Vector3.zero;
-            player.animator.SetTrigger("isTake");
-            if (AudioManager.instance != null)
-            {
-                AudioManager.instance.Play_gun_powder_sound();
-            }
-        }
-        else if (t == ShooterType.Enemy)
-        {
-            enemy.animator.SetTrigger("isTake");
-            if (AudioManager.instance != null)
-            {
-                AudioManager.instance.Play_gun_powder_sound();
-            }
-        }
-
         if (enemyItemArea == null)
         {
             Debug.LogWarning("StealEnemyItem: enemyItemArea atanmadý!");
@@ -46,6 +27,25 @@ public class StealEnemyItem : ClickableItem
             stolenItem.transform.parent = playerItemArea;
             stolenItem.transform.position= stolenitemArea.position;
             stolenItem.gameObject.layer = LayerMask.NameToLayer("Item");
+        }
+        if (t == ShooterType.Player)
+        {
+            this.gameObject.transform.parent = player.itemholder;
+            this.gameObject.transform.localPosition = Vector3.zero;
+            player.animator.SetTrigger("isTake");
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.Play_gun_powder_sound();
+            }
+        }
+        else if (t == ShooterType.Enemy)
+        {
+            enemy.myItems.Add(stolenItem);
+            enemy.animator.SetTrigger("isTake");
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.Play_gun_powder_sound();
+            }
         }
         Destroy(gameObject,2f);
     }

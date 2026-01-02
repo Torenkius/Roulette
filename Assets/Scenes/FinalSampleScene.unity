@@ -420,6 +420,10 @@ MonoBehaviour:
   gun: {fileID: 345739836}
   myItems:
   - {fileID: 1269211166}
+  - {fileID: 2052930740}
+  - {fileID: 1535357894}
+  - {fileID: 1828749293}
+  - {fileID: 1724500627}
   animator: {fileID: 0}
   HealHolder: {fileID: 1224431830}
   itemHolder: {fileID: 1410075148}
@@ -430,6 +434,7 @@ MonoBehaviour:
   selfShotChance: 0.2
   healthIconPrefab: {fileID: 7288149469717029727, guid: 519a39dfd3186ba4cb2bb03d09799d6f, type: 3}
   healthContainer: {fileID: 1774886793}
+  deathDelay: 2
 --- !u!1001 &100660877
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -610,6 +615,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8711473752090771341, guid: 1a71053b01fd76844b2ce27e6ddaa142, type: 3}
   m_PrefabInstance: {fileID: 106732622}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &110498940 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3341824777143653885, guid: 87d01562af45aa74ea48ae1cb4c73233, type: 3}
+  m_PrefabInstance: {fileID: 1192664965}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &128170891
 PrefabInstance:
@@ -2032,6 +2042,7 @@ MonoBehaviour:
   itemName: Item
   player: {fileID: 836033154}
   enemy: {fileID: 93609473}
+  animator: {fileID: 0}
   gameManager: {fileID: 712829014}
 --- !u!4 &345739838 stripped
 Transform:
@@ -4254,6 +4265,7 @@ GameObject:
   m_Component:
   - component: {fileID: 712829013}
   - component: {fileID: 712829014}
+  - component: {fileID: 712829015}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -4288,10 +4300,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7414d8e7f3d365543a95374b4d1f1433, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  sc: {fileID: 712829015}
   player: {fileID: 836033154}
   ai: {fileID: 93609473}
   uiManager: {fileID: 0}
+  delay: 5
   isRoundFreeze: 0
+--- !u!114 &712829015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712829010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 037116a6a07df6745ae829fa9a3c4704, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneLoader
 --- !u!1001 &751925469
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5135,7 +5161,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e91ca20ed800b54d9d9aa89e05becf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCharacter
-  enemyAI: {fileID: 0}
+  gameManager: {fileID: 712829014}
+  enemyAI: {fileID: 93609473}
   maxHealth: 8
   currentHealth: 0
   isDead: 0
@@ -7097,16 +7124,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7524381279642428480, guid: 87d01562af45aa74ea48ae1cb4c73233, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 1192664972}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3341824777143653885, guid: 87d01562af45aa74ea48ae1cb4c73233, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1192664972}
   m_SourcePrefab: {fileID: 100100000, guid: 87d01562af45aa74ea48ae1cb4c73233, type: 3}
 --- !u!4 &1192664966 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4884436247019720911, guid: 87d01562af45aa74ea48ae1cb4c73233, type: 3}
   m_PrefabInstance: {fileID: 1192664965}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1192664972
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110498940}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 71d18e5a345d0cc44878e6072b4cfa9e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1196816994
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7917,8 +7973,8 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.103
-  m_Pitch: 0.25
+  m_Volume: 0.126
+  m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
@@ -8563,6 +8619,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2072638494}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1535357894 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7524381279642428480, guid: 87d01562af45aa74ea48ae1cb4c73233, type: 3}
+  m_PrefabInstance: {fileID: 656571610}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fafdb7e190ffe934195b76053e9e26d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealItem
 --- !u!1001 &1558189129
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9409,6 +9476,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4915608611381151666, guid: 83b1f32a3d829fa4089d2794e4f81eac, type: 3}
   m_PrefabInstance: {fileID: 1724500625}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1724500627 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6413462096864683377, guid: 83b1f32a3d829fa4089d2794e4f81eac, type: 3}
+  m_PrefabInstance: {fileID: 1724500625}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e83f7d462e3e2e448c9a6179fef517c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StealEnemyItem
 --- !u!1 &1728697612
 GameObject:
   m_ObjectHideFlags: 0
@@ -10198,6 +10276,17 @@ RectTransform:
   m_AnchoredPosition: {x: -7.4, y: 9.11}
   m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1828749293 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4430804826692067813, guid: ecd9e05e8fa29dd4e8a489512da51f02, type: 3}
+  m_PrefabInstance: {fileID: 1602270380}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55c3133279e38c14fb319396d2d02a71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShieldItem
 --- !u!4 &1852264884 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7772095340250511049, guid: c0c15d23149e045448be5328e7da2a4b, type: 3}
@@ -11432,6 +11521,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2047164706}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2052930740 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3412667362418750104, guid: aa58eec968ad28249bf2b308cf1daa7d, type: 3}
+  m_PrefabInstance: {fileID: 1868572765}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f950a69fbfe66c4caa9ce479db730db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyTurnBlockItem
 --- !u!1001 &2057632542
 PrefabInstance:
   m_ObjectHideFlags: 0

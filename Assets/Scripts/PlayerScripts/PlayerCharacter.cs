@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerCharacter : MonoBehaviour
 {
+    public GameManager gameManager;
     public AIController enemyAI;
     [Header("Health")]
     public int maxHealth = 3;
@@ -107,7 +108,8 @@ public class PlayerCharacter : MonoBehaviour
     }
     void Die()
     {
-       enemyAI.animator.SetTrigger("isWin");
+        gameManager.IsGameOver = true;
+        enemyAI.animator.SetTrigger("isWin");
        animator.SetTrigger("isDead");
 
         Debug.Log("Player öldü!");

@@ -1,14 +1,18 @@
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     [Header("References")]
+    public SceneLoader sc;
     public PlayerCharacter player;
     public AIController ai;
-    public UIManager uiManager;   // İstersen boş bırak, sadece varsa kullanılır
+    public UIManager uiManager;
+    public float delay=5f;
+    bool gameOverHandled = false;// İstersen boş bırak, sadece varsa kullanılır
 
     public TurnOwner CurrentTurn { get; private set; }
-    public bool IsGameOver { get; private set; }
+    public bool IsGameOver { get;  set; }
     public bool isRoundFreeze = false;
 
     private void Start()
@@ -68,8 +72,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void EndTurn()
     {
-        if (IsGameOver) return;
-        if(isRoundFreeze)
+        if (IsGameOver && !gameOverHandled)
+        {
+            gameOverHandled = true;
+            StartCoroutine(LoadEndScreenWithDelay(delay));
+        }
+        if (isRoundFreeze)
         {
             StartTurn();
         }
@@ -80,6 +88,13 @@ public class GameManager : MonoBehaviour
 
         }
             
+    }
+    private IEnumerator LoadEndScreenWithDelay(float  delay)
+    {
+        // 5 saniye bekle
+        yield return new WaitForSeconds(delay);
+
+        sc.LoadScene("EndScreen");
     }
 
     private void UpdateTurnUI()
