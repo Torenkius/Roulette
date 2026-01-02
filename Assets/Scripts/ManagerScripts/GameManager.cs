@@ -18,6 +18,10 @@ public class GameManager : MonoBehaviour
         {
             AudioManager.instance.Play_chest_sound();
         }
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.Play_background_sound();
+        }
     }
 
     public void StartGame()

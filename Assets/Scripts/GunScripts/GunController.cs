@@ -127,14 +127,14 @@ public class GunController : MonoBehaviour
         {
             if (AudioManager.instance != null)
             {
-                AudioManager.instance.Play_full_gun_sound();
+                AudioManager.instance.Play_empty_gun_sound();
             }
         }
         else
         {
             if (AudioManager.instance != null)
             {
-                AudioManager.instance.Play_empty_gun_sound();
+                AudioManager.instance.Play_full_gun_sound();
             }
         }
             return damage;
