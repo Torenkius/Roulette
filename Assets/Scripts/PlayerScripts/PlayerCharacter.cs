@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -20,12 +21,17 @@ public class PlayerCharacter : MonoBehaviour
     public Transform healholder;
     public Transform itemholder;
 
+    [Header("Health UI")]
+    public GameObject healthIconPrefab; // Ýçinde UI Image olan bir Prefab
+    public Transform healthContainer;   // Tahtadaki Horizontal Layout Group objesi
+    private List<GameObject> activeIcons = new List<GameObject>();
 
     private Camera cam;
 
     void Awake()
     {
-        animator= GetComponent<Animator>();
+        InitializeHealthUI();
+        animator = GetComponent<Animator>();
         interactableLayer =LayerMask.GetMask("Item");
         cam = Camera.main;
         currentHealth = maxHealth;
@@ -82,6 +88,7 @@ public class PlayerCharacter : MonoBehaviour
         {
             Die();
         }
+        UpdateHealthUI();
     }
 
     public void Heal(int amount)
@@ -93,6 +100,7 @@ public class PlayerCharacter : MonoBehaviour
         {
             AudioManager.instance.Play_healing_sound();
         }
+        UpdateHealthUI();
     }
     void Die()
     {
@@ -105,5 +113,24 @@ public class PlayerCharacter : MonoBehaviour
     public void setUp()
     {
                currentHealth = maxHealth;
+    }
+
+    void InitializeHealthUI()
+    {
+        // Baþlangýçta maxHealth kadar ikon oluþtur ve listeye ekle
+        for (int i = 0; i < maxHealth; i++)
+        {
+            GameObject newIcon = Instantiate(healthIconPrefab, healthContainer);
+            activeIcons.Add(newIcon);
+        }
+    }
+
+    public void UpdateHealthUI()
+    {
+        // Can azaldýkça ikonlarý kapatýr, arttýkça açar
+        for (int i = 0; i < activeIcons.Count; i++)
+        {
+            activeIcons[i].SetActive(i < currentHealth);
+        }
     }
 }

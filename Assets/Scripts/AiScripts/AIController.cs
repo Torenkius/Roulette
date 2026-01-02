@@ -30,9 +30,14 @@ public class AIController : MonoBehaviour
     [Range(0f, 1f)]
     public float selfShotChance = 0.2f;     // %20 kendine sýkma ihtimali (istersen deðiþ)
 
+    [Header("Health UI")]
+    public GameObject healthIconPrefab; // Ýçinde UI Image olan bir Prefab
+    public Transform healthContainer;   // Tahtadaki Horizontal Layout Group objesi
+    private List<GameObject> activeIcons = new List<GameObject>();
+
     private void Awake()
     {
-        
+        InitializeHealthUI();
         animator = GetComponent<Animator>();
         animator.SetTrigger("isWait");
         currentHealth = maxHealth;
@@ -141,6 +146,7 @@ public class AIController : MonoBehaviour
         {
             AudioManager.instance.Play_healing_sound();
         }
+        UpdateHealthUI();
     }
 
     public void TakeDamage(int amount)
@@ -158,6 +164,8 @@ public class AIController : MonoBehaviour
         Debug.Log("AI damage aldý. Can: " + currentHealth);
         if (currentHealth <= 0)
             Die();
+
+        UpdateHealthUI();
     }
     public void setUp()
     {
@@ -174,6 +182,24 @@ public class AIController : MonoBehaviour
         if (AudioManager.instance != null)
         {
             AudioManager.instance.Play_die_sound();
+        }
+    }
+    void InitializeHealthUI()
+    {
+        // Baþlangýçta maxHealth kadar ikon oluþtur ve listeye ekle
+        for (int i = 0; i < maxHealth; i++)
+        {
+            GameObject newIcon = Instantiate(healthIconPrefab, healthContainer);
+            activeIcons.Add(newIcon);
+        }
+    }
+
+    public void UpdateHealthUI()
+    {
+        // Can azaldýkça ikonlarý kapatýr, arttýkça açar
+        for (int i = 0; i < activeIcons.Count; i++)
+        {
+            activeIcons[i].SetActive(i < currentHealth);
         }
     }
 }
