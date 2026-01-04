@@ -411,7 +411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44c7f19553d83464fb5c2b36cbd940d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIController
-  maxHealth: 8
+  maxHealth: 1
   currentHealth: 0
   isDead: 0
   shieldActive: 0
@@ -5163,7 +5163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCharacter
   gameManager: {fileID: 712829014}
   enemyAI: {fileID: 93609473}
-  maxHealth: 8
+  maxHealth: 1
   currentHealth: 0
   isDead: 0
   clickDistance: 10
@@ -7960,6 +7960,8 @@ MonoBehaviour:
   reload_sound: {fileID: 8300000, guid: bc0e0b74cd87eba40999433d06bfebb2, type: 3}
   chest_sound: {fileID: 8300000, guid: ad666e0f9596b094a91365ae42f0c0d9, type: 3}
   die_sound: {fileID: 8300000, guid: d6ddf901458fb5348afefb80875d3b4c, type: 3}
+  victory_sound: {fileID: 8300000, guid: ebde02ce3b047ac458ee9ff6c96bade3, type: 3}
+  defeat_sound: {fileID: 8300000, guid: d6ddf901458fb5348afefb80875d3b4c, type: 3}
 --- !u!82 &1409310030
 AudioSource:
   m_ObjectHideFlags: 0

@@ -18,6 +18,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip reload_sound;
     public AudioClip chest_sound;
     public AudioClip die_sound;
+    public AudioClip victory_sound;
+    public AudioClip defeat_sound;
 
     // --- FUNCTIONS ---
     void Awake()
@@ -34,7 +36,18 @@ public class AudioManager : MonoBehaviour
         soundSource.loop = true;
         soundSource.Play();
     }
-
+    public void Play_win_sound()
+    {
+        soundSource.clip = victory_sound;
+        soundSource.loop = true;
+        soundSource.Play();
+    }
+    public void Play_lose_sound()
+    {
+        soundSource.clip = defeat_sound;
+        soundSource.loop = true;
+        soundSource.Play();
+    }
     public void Play_empty_gun_sound()
     {
         soundSource.PlayOneShot(empty_gun_sound);

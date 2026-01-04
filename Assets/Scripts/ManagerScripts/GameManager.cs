@@ -75,7 +75,23 @@ public class GameManager : MonoBehaviour
         if (IsGameOver && !gameOverHandled)
         {
             gameOverHandled = true;
-            StartCoroutine(LoadEndScreenWithDelay(delay));
+            if (player.currentHealth <= 0)
+            {
+                StartCoroutine(LoadEndScreenDieWithDelay(delay));
+                if (AudioManager.instance != null)
+                {
+                    AudioManager.instance.Play_lose_sound();
+                }
+            }
+                
+            else if(ai.currentHealth<=0)
+            {
+                StartCoroutine(LoadEndScreenWonWithDelay(delay));
+                if (AudioManager.instance != null)
+                {
+                    AudioManager.instance.Play_win_sound();
+                }
+            }
         }
         if (isRoundFreeze)
         {
@@ -89,12 +105,20 @@ public class GameManager : MonoBehaviour
         }
             
     }
-    private IEnumerator LoadEndScreenWithDelay(float  delay)
+    private IEnumerator LoadEndScreenDieWithDelay(float  delay)
     {
         // 5 saniye bekle
         yield return new WaitForSeconds(delay);
 
-        sc.LoadScene("EndScreen");
+        sc.LoadScene("EndScreenYouDied");
+    }
+
+    private IEnumerator LoadEndScreenWonWithDelay(float delay)
+    {
+        // 5 saniye bekle
+        yield return new WaitForSeconds(delay);
+
+        sc.LoadScene("EndScreenYouWon");
     }
 
     private void UpdateTurnUI()
