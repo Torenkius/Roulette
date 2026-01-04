@@ -33,6 +33,7 @@ public class StealEnemyItem : ClickableItem
             this.gameObject.transform.parent = player.itemholder;
             this.gameObject.transform.localPosition = Vector3.zero;
             player.animator.SetTrigger("isTake");
+            enemy.myItems.Remove(stolenItem);   
             if (AudioManager.instance != null)
             {
                 AudioManager.instance.Play_gun_powder_sound();
@@ -40,6 +41,8 @@ public class StealEnemyItem : ClickableItem
         }
         else if (t == ShooterType.Enemy)
         {
+            this.gameObject.transform.parent = enemy.itemHolder;
+            this.gameObject.transform.localPosition = Vector3.zero;
             enemy.myItems.Add(stolenItem);
             enemy.animator.SetTrigger("isTake");
             if (AudioManager.instance != null)

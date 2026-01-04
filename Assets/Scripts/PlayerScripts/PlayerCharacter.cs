@@ -110,7 +110,7 @@ public class PlayerCharacter : MonoBehaviour
     {
         gameManager.IsGameOver = true;
         enemyAI.animator.SetTrigger("isWin");
-       animator.SetTrigger("isDead");
+        animator.SetTrigger("isDead");
 
         Debug.Log("Player öldü!");
         if (AudioManager.instance != null)

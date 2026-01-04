@@ -82,9 +82,13 @@ public class AIController : MonoBehaviour
         // AI tur ba??nda bir s?re bekler: "d???n?yor" hissi verir
         yield return new WaitForSeconds(thinkDelay);
 
-        // 1) ?nce elinde item varsa bir tane kullanmay? dener
-        // (UseItemIfAny i?inde item se?me mant??? var)
-        UseItemIfAny();
+
+        bool usedItem = UseItemIfAny();
+        if (usedItem)
+        {
+            // Animasyon bitene kadar bekle
+            yield return new WaitForSeconds(5f);
+        }
 
         // Item kulland?ktan sonra k???k bir ekstra bekleme: animasyon/ak?? daha do?al olur
         yield return new WaitForSeconds(0.25f);
@@ -93,13 +97,13 @@ public class AIController : MonoBehaviour
         Shoot();
     }
 
-    private void UseItemIfAny()
+    private bool UseItemIfAny()
     {
         // Item yoksa hi?bir ?ey yapma
         if (myItems == null || myItems.Count == 0)
         {
             Debug.Log("AI item yok, item kullanmad?.");
-            return;
+            return false;
         }
 
         // Ak?ll? ?ncelik a??k ise: s?rayla kontrol ederek en mant?kl? item'i se?
@@ -113,7 +117,7 @@ public class AIController : MonoBehaviour
                 {
                     Debug.Log("AI can? d???k, HealItem kullan?yor.");
                     UseItem(healItem);
-                    return;
+                    return true;
                 }
             }
 
@@ -125,17 +129,20 @@ public class AIController : MonoBehaviour
                 {
                     Debug.Log("AI can? d???k, EnemyTurnBlockItem (Freeze) kullan?yor.");
                     UseItem(freeze);
-                    return;
+                    return true;
                 }
             }
 
             // 3) Damage boost varsa kullan (daha fazla vurma ?ans?)
-            DamageItem dmg = myItems.OfType<DamageItem>().FirstOrDefault();
-            if (dmg != null)
+            if(!player.shieldActive)
             {
-                Debug.Log("AI DamageItem kullanýyor (damage boost).");
-                UseItem(dmg);
-                return;
+                DamageItem dmg = myItems.OfType<DamageItem>().FirstOrDefault();
+                if (dmg != null)
+                {
+                    Debug.Log("AI DamageItem kullanýyor (damage boost).");
+                    UseItem(dmg);
+                    return true;
+                }
             }
 
             // 4) Steal varsa en sona b?rak?p kullan
@@ -144,7 +151,7 @@ public class AIController : MonoBehaviour
             {
                 Debug.Log("AI StealEnemyItem kullan?yor (item ?alma).");
                 UseItem(steal);
-                return;
+                return true;
             }
 
             // Ak?ll? ?ncelik a??k ama uygun item bulunamad?ysa random'a d??ecek
@@ -155,6 +162,7 @@ public class AIController : MonoBehaviour
         int r = Random.Range(0, myItems.Count);
         Debug.Log("AI random item se?ti: " + myItems[r].GetType().Name);
         UseItem(myItems[r]);
+        return true;
     }
 
     void Shoot()

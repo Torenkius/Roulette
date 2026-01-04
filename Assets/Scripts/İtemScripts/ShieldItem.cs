@@ -9,6 +9,8 @@ public class ShieldItem : ClickableItem
         // Zaten açýksa tekrar açmaya gerek yok ama istersen üst üste bindirebilirsin
         if (t == ShooterType.Enemy)
         {
+            this.gameObject.transform.parent = enemy.itemHolder;
+            this.gameObject.transform.localPosition = Vector3.zero;
             enemy.animator.SetTrigger("isTake");
             enemy.shieldActive = true;
             if (AudioManager.instance != null)

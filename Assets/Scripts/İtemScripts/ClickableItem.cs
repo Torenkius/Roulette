@@ -15,13 +15,4 @@ public abstract class ClickableItem : MonoBehaviour
     }
 
     public abstract void OnClicked(ShooterType type);
-    protected virtual void OnMouseEnter()
-    {
-        if (animator != null) animator.SetBool("isHover", true);
-    }
-
-    protected virtual void OnMouseExit()
-    {
-        if (animator != null) animator.SetBool("isHover", false);
-    }
 }

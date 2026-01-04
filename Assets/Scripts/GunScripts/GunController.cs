@@ -15,7 +15,8 @@ public class GunController : MonoBehaviour
     public Transform firePoint;
     public Transform GunT;
     public Transform playerGunHolder;
-    public Transform enemyGunHolder;// Ate? efekti veya mermi ??k?? noktas?
+    public Transform enemyGunHolder;
+    public ShellVisualSpawner spawner;// Ate? efekti veya mermi ??k?? noktas?
 
     [Header("Damage Settings")]
     public int baseDamage = 1;            // Normal hasar
@@ -59,6 +60,7 @@ public class GunController : MonoBehaviour
         {
             magazine.Enqueue(shell);
         }
+        spawner.SpawnShells(liveCount, blankCount);
 
         Debug.Log($"Magazine Loaded: {liveCount} Live, {blankCount} Blank");
         if (AudioManager.instance != null)
@@ -99,6 +101,8 @@ public class GunController : MonoBehaviour
         {
             GunT.transform.parent = playerGunHolder;
             GunT.transform.localPosition = Vector3.zero;
+            GunT.transform.rotation = playerGunHolder.rotation;
+            GunT.transform.rotation = playerGunHolder.rotation * Quaternion.Euler(0f, 180f, 0f);
             player.animator.SetTrigger("isGun");
             player.TakeDamage(damage);
             if (currentShell == ShellType.Blank) 
@@ -110,6 +114,8 @@ public class GunController : MonoBehaviour
         {
             GunT.transform.parent = enemyGunHolder;
             GunT.transform.localPosition = Vector3.zero;
+            GunT.transform.rotation = enemyGunHolder.rotation;
+            GunT.transform.rotation = enemyGunHolder.rotation * Quaternion.Euler(0f, 180f, 0f);
             enemy.animator.SetTrigger("isGun");
             if (currentShell == ShellType.Blank)
             {
@@ -121,7 +127,8 @@ public class GunController : MonoBehaviour
         else if (shooter == ShooterType.Player && !isSelf)
         {
             GunT.transform.parent = playerGunHolder;
-            GunT.transform.localPosition = Vector3.zero;
+            GunT.transform.rotation= playerGunHolder.rotation;
+            GunT.transform.localPosition= Vector3.zero;
             player.animator.SetTrigger("isGun");
 
             enemy.TakeDamage(damage);
@@ -130,6 +137,7 @@ public class GunController : MonoBehaviour
         {
             GunT.transform.parent = enemyGunHolder;
             GunT.transform.localPosition = Vector3.zero;
+            GunT.transform.rotation = enemyGunHolder.rotation;
             enemy.animator.SetTrigger("isGun");
             player.TakeDamage(damage);
         }

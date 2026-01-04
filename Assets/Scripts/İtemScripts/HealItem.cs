@@ -20,7 +20,8 @@ public class HealItem : ClickableItem
         }
         else
         {
-           
+            this.gameObject.transform.parent = enemy.HealHolder;
+            this.gameObject.transform.localPosition = Vector3.zero;
             enemy.animator.SetTrigger("isDrink");
             if (AudioManager.instance != null)
             {

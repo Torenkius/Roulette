@@ -19,6 +19,8 @@ public class EnemyTurnBlockItem : ClickableItem
         }
         else if (t == ShooterType.Enemy)
         {
+            this.gameObject.transform.parent = enemy.itemHolder;
+            this.gameObject.transform.localPosition = Vector3.zero;
             enemy.animator.SetTrigger("isTake");
             if (AudioManager.instance != null)
             {
