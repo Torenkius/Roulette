@@ -9,6 +9,7 @@ public class HealItem : ClickableItem
         Debug.Log(itemName + " týklandý! Can veriyor: " + healAmount);
         if (t == ShooterType.Player)
         {
+            HUDLog.Instance.ShowMessage("Kendini iyileþtirdin +" + healAmount);
             this.gameObject.transform.parent = player.healholder;
             this.gameObject.transform.localPosition = Vector3.zero;
             player.animator.SetTrigger("isDrink");
@@ -20,6 +21,7 @@ public class HealItem : ClickableItem
         }
         else
         {
+            HUDLog.Instance.ShowMessage("Rakibin kendini iyileþtirdi +" + healAmount);
             this.gameObject.transform.parent = enemy.HealHolder;
             this.gameObject.transform.localPosition = Vector3.zero;
             enemy.animator.SetTrigger("isDrink");

@@ -30,6 +30,8 @@ public class StealEnemyItem : ClickableItem
         }
         if (t == ShooterType.Player)
         {
+            string str = string.Format("Rakibin  {0} itemini çaldýn!", stolenItem);
+            HUDLog.Instance.ShowMessage(str);
             this.gameObject.transform.parent = player.itemholder;
             this.gameObject.transform.localPosition = Vector3.zero;
             player.animator.SetTrigger("isTake");
@@ -41,6 +43,8 @@ public class StealEnemyItem : ClickableItem
         }
         else if (t == ShooterType.Enemy)
         {
+            string str = string.Format("Düþman  {0} itemini çaldý!", stolenItem);
+            HUDLog.Instance.ShowMessage(str);
             this.gameObject.transform.parent = enemy.itemHolder;
             this.gameObject.transform.localPosition = Vector3.zero;
             enemy.myItems.Add(stolenItem);

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
+using UnityEngine.Rendering;
 
 
 public class GunController : MonoBehaviour
@@ -27,7 +28,7 @@ public class GunController : MonoBehaviour
 
     public ShellType LastFiredShell { get; private set; } //sonradan eklendi
 
-    private void Awake()
+    private void Start()
     {
         player = GameObject.FindWithTag("Player").GetComponent<PlayerCharacter>();
         enemy = GameObject.FindWithTag("Enemy").GetComponent<AIController>();
@@ -61,8 +62,13 @@ public class GunController : MonoBehaviour
             magazine.Enqueue(shell);
         }
         spawner.SpawnShells(liveCount, blankCount);
+        string str=string.Format(
+    " Þarjörde {0} dolu {1} boþ mermi var",
+    liveCount,
+    blankCount
+);
 
-        Debug.Log($"Magazine Loaded: {liveCount} Live, {blankCount} Blank");
+        HUDLog.Instance.ShowMessage(str);
         if (AudioManager.instance != null)
         {
             AudioManager.instance.Play_reload_sound();
@@ -85,7 +91,7 @@ public class GunController : MonoBehaviour
 
 
         // Sadece canl? mermi hasar versin
-        if (currentShell == ShellType.Live)
+        if (currentShell == ShellType.Live) 
         {
             damage = baseDamage;
 
@@ -99,6 +105,7 @@ public class GunController : MonoBehaviour
         }
         if (shooter == ShooterType.Player && isSelf)
         {
+            HUDLog.Instance.ShowMessage("Kendine Ateþ Ettin");
             GunT.transform.parent = playerGunHolder;
             GunT.transform.localPosition = Vector3.zero;
             GunT.transform.rotation = playerGunHolder.rotation;
@@ -112,6 +119,7 @@ public class GunController : MonoBehaviour
         }
         else if (shooter == ShooterType.Enemy && isSelf)
         {
+            HUDLog.Instance.ShowMessage("Rakibin kendine  Ateþ Etti");
             GunT.transform.parent = enemyGunHolder;
             GunT.transform.localPosition = Vector3.zero;
             GunT.transform.rotation = enemyGunHolder.rotation;
@@ -126,6 +134,7 @@ public class GunController : MonoBehaviour
         }
         else if (shooter == ShooterType.Player && !isSelf)
         {
+            HUDLog.Instance.ShowMessage("Rakibine Ateþ Ettin");
             GunT.transform.parent = playerGunHolder;
             GunT.transform.rotation= playerGunHolder.rotation;
             GunT.transform.localPosition= Vector3.zero;
@@ -135,28 +144,13 @@ public class GunController : MonoBehaviour
         }
         else if (shooter == ShooterType.Enemy && !isSelf)
         {
+            HUDLog.Instance.ShowMessage("Rakibine sana  Ateþ Etti");
             GunT.transform.parent = enemyGunHolder;
             GunT.transform.localPosition = Vector3.zero;
             GunT.transform.rotation = enemyGunHolder.rotation;
             enemy.animator.SetTrigger("isGun");
             player.TakeDamage(damage);
         }
-        else if (shooter == ShooterType.Enemy && isSelf)
-        {
-            // AI kendine s?k?yor: silah AI taraf?nda kals?n, AI animasyonu oynas?n
-            GunT.transform.parent = enemyGunHolder;
-            GunT.transform.localPosition = Vector3.zero;
-
-            if (enemy != null && enemy.animator != null)
-                enemy.animator.SetTrigger("isGun");
-
-            // Hasar? AI kendisi al?r
-            if (enemy != null)
-                enemy.TakeDamage(damage);
-
-            Debug.Log("AI kendine ate? etti. Damage: " + damage);
-        }
-        //sonradan eklendi ->
         if (gunReturnToTable != null)
             gunReturnToTable.StartReturnTimer();
         else

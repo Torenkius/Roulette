@@ -19,6 +19,7 @@ public class Gun : ClickableItem
 
     public override void OnClicked(ShooterType type)
     {
+        HUDLog.Instance.ShowMessage("Rakibine ateþ etmek için sol týk kendine ateþ etmek için sað týk kullan");
         // Bu fonksiyon sadece silaha týkladýðýn anda ÇALIÞIYOR
         Debug.Log(itemName + " týklandý! Silah SEÇÝLDÝ, hedef bekleniyor.");
 

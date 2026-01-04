@@ -9,6 +9,7 @@ public class EnemyTurnBlockItem : ClickableItem
         gameManager.isRoundFreeze = true;
         if (t == ShooterType.Player)
         {
+            HUDLog.Instance.ShowMessage("Rakibin sýrasý donduruldu sýra tekrar sana geçicek");
             this.gameObject.transform.parent = player.itemholder;
             this.gameObject.transform.localPosition = Vector3.zero;
             player.animator.SetTrigger("isTake");
@@ -19,6 +20,7 @@ public class EnemyTurnBlockItem : ClickableItem
         }
         else if (t == ShooterType.Enemy)
         {
+            HUDLog.Instance.ShowMessage("Rakip sýraný dondurdu sýra tekrar rakibinde");
             this.gameObject.transform.parent = enemy.itemHolder;
             this.gameObject.transform.localPosition = Vector3.zero;
             enemy.animator.SetTrigger("isTake");

@@ -27,6 +27,7 @@ public class AudioManager : MonoBehaviour
         // Bu yapý sayesinde AudioManager.instance diyerek her yerden eriþebiliriz
         if (instance == null)
         {
+            DontDestroyOnLoad(gameObject);
             instance = this;
         }
     }

@@ -9,6 +9,7 @@ public class ShieldItem : ClickableItem
         // Zaten açýksa tekrar açmaya gerek yok ama istersen üst üste bindirebilirsin
         if (t == ShooterType.Enemy)
         {
+            HUDLog.Instance.ShowMessage("Rakibin kalkan kullandý");
             this.gameObject.transform.parent = enemy.itemHolder;
             this.gameObject.transform.localPosition = Vector3.zero;
             enemy.animator.SetTrigger("isTake");
@@ -20,6 +21,7 @@ public class ShieldItem : ClickableItem
         }
         if (t==ShooterType.Player)
         {
+            HUDLog.Instance.ShowMessage("Kalkan kullandýn");
             this.gameObject.transform.parent = player.itemholder;
             this.gameObject.transform.localPosition = Vector3.zero;
             player.animator.SetTrigger("isTake");

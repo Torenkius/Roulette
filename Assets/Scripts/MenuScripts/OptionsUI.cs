@@ -13,27 +13,38 @@ public class OptionsUI : MonoBehaviour
     [SerializeField] private TMP_Dropdown displayDropdown;
 
     private const string VolumeKey = "opt_volume";
-    private const string DisplayKey = "opt_display"; // 0 windowed, 1 fullscreen
+    private const string DisplayKey = "opt_display"; // 0 = Windowed, 1 = Fullscreen
 
     void Start()
     {
         if (optionsPanel) optionsPanel.SetActive(false);
 
-        // Dropdown opsiyonları boşsa doldur
-        if (displayDropdown != null && displayDropdown.options.Count == 0)
+        // Dropdown boşsa seçenekleri ekle
+        if (displayDropdown != null)
         {
-            displayDropdown.options.Add(new TMP_Dropdown.OptionData("Windowed"));
-            displayDropdown.options.Add(new TMP_Dropdown.OptionData("Fullscreen"));
+            if (displayDropdown.options.Count == 0)
+            {
+                displayDropdown.options.Add(new TMP_Dropdown.OptionData("FullScreen"));
+                displayDropdown.options.Add(new TMP_Dropdown.OptionData("Windowed"));
+            }
+
+            // 🔹 ÖNEMLİ: Event'i buradan bağlıyoruz
+            displayDropdown.onValueChanged.RemoveAllListeners();
+            displayDropdown.onValueChanged.AddListener(OnDisplayChanged);
         }
 
         // Kayıtlı ayarları yükle
         float vol = PlayerPrefs.GetFloat(VolumeKey, 0.7f);
-        int disp = PlayerPrefs.GetInt(DisplayKey, 1);
+        int disp = PlayerPrefs.GetInt(DisplayKey, 0); // default: Windowed
 
         // UI'ya bas
         if (volumeSlider) volumeSlider.value = vol;
+
         if (displayDropdown)
         {
+            // 0–1 aralığına sıkıştır
+            disp = Mathf.Clamp(disp, 0, displayDropdown.options.Count - 1);
+
             displayDropdown.value = disp;
             displayDropdown.RefreshShownValue();
         }
@@ -64,6 +75,8 @@ public class OptionsUI : MonoBehaviour
 
     public void OnDisplayChanged(int idx)
     {
+        Debug.Log("OnDisplayChanged çağrıldı, idx = " + idx);
+
         ApplyDisplay(idx);
         PlayerPrefs.SetInt(DisplayKey, idx);
         PlayerPrefs.Save();
@@ -76,7 +89,20 @@ public class OptionsUI : MonoBehaviour
 
     private void ApplyDisplay(int idx)
     {
+        idx = Mathf.Clamp(idx, 0, 1);
+
         // 1 = Fullscreen, 0 = Windowed
-        Screen.fullScreenMode = (idx == 1) ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
+        if (idx == 0)
+        {
+            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+            Screen.fullScreen = true;
+        }
+        else
+        {
+            Screen.fullScreenMode = FullScreenMode.Windowed;
+            Screen.fullScreen = false;
+        }
+
+        Debug.Log($"ApplyDisplay -> idx={idx}, mode={Screen.fullScreenMode}, full={Screen.fullScreen}");
     }
 }

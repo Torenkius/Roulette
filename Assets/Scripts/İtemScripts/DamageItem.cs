@@ -1,4 +1,4 @@
-using UnityEditor.TextCore.Text;
+
 using UnityEngine;
 
 public class DamageItem : ClickableItem
@@ -10,6 +10,7 @@ public class DamageItem : ClickableItem
         Debug.Log(itemName + " týklandý! Hasar veriyor: " + damageAmountX);
          GameObject gunObject = GameObject.FindGameObjectWithTag("Gun");
         if(t==ShooterType.Player ){
+            HUDLog.Instance.ShowMessage("Silah artýk 2 kat hasar veriyor");
             this.gameObject.transform.parent = player.itemholder;
             this.gameObject.transform.localPosition = Vector3.zero;
             player.animator.SetTrigger("isTake");
@@ -20,6 +21,7 @@ public class DamageItem : ClickableItem
         }
         else if (t == ShooterType.Enemy)
         {
+            HUDLog.Instance.ShowMessage("Silah artýk 2 kat hasar veriyor");
             this.gameObject.transform.parent = enemy.itemHolder;
             this.gameObject.transform.localPosition = Vector3.zero;
             enemy.animator.SetTrigger("isTake");

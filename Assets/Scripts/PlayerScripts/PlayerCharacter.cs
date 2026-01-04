@@ -111,6 +111,7 @@ public class PlayerCharacter : MonoBehaviour
         gameManager.IsGameOver = true;
         enemyAI.animator.SetTrigger("isWin");
         animator.SetTrigger("isDead");
+        HUDLog.Instance.ShowMessage("Öldün");
 
         Debug.Log("Player öldü!");
         if (AudioManager.instance != null)
